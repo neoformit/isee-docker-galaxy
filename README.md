@@ -20,10 +20,10 @@ arguments to the `iSEE()` function call. Make sure that they are valid params ot
 
 ```sh
 cd <my-dev-directory>
-git clone https://github.com/neoformit/isee-docker-galaxy.git
-cd isee-docker-galaxy
-sudo apt install docker
-sudo docker build -t isee:test .
+git clone https://github.com/neoformit/isee-docker-galaxy.git && \
+cd isee-docker-galaxy && \
+sudo apt install -y docker && \
+sudo docker build -t isee:test ./docker
 ```
 
 ### Test run
@@ -39,6 +39,16 @@ The `test-data` directory contains some data to test run the container:
 #         └── se.rds
 
 cd test-data
-docker run -v "$(pwd)"/src:/import -p 5000:8888 isee:test
-# When output stream stops, app should be available at http://127.0.0.1:5000
+docker run -d -v "$(pwd)"/src:/import -p 5000:8888 --name isee isee:test
+```
+
+Give the app 20 seconds to fire up, then find it at http://127.0.0.1:5000 in
+your browser.
+
+**Take down the container**
+
+The docker container will run forever unless you stop it:
+
+```sh
+docker container stop isee
 ```
