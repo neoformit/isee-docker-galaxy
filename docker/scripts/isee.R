@@ -6,12 +6,12 @@
 library(iSEE)
 library(HDF5Array)
 
-source("/import/prep.R")  # import prep() and iSEE_PARAMS
-
 args = commandArgs(trailingOnly=TRUE)
-if (length(args) == 0) {
-  stop("Requires one positional arg: SCE folder name", call.=FALSE)
+if (length(args) != 2) {
+  stop("Requires two positional args: [sce_data path], [prep.R path], ", call.=FALSE)
 }
+
+source(args[2])  # import prep() and iSEE_PARAMS
 
 sce_file <- args[1]
 sce_origin <- loadHDF5SummarizedExperiment(sce_file)

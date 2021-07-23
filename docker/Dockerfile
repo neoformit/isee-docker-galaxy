@@ -1,5 +1,4 @@
 FROM iseedevelopers/isee:latest
-# FROM iseedevelopers/isee:RELEASE_3_10 ?
 
 RUN apt-get update -qq && apt-get install -y python3-pip
 
