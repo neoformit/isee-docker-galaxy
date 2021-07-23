@@ -11,6 +11,12 @@
 
 # ------------------------------------------------------------------------------
 
+# Locally:
+# (run with docker run -v "$(pwd)"/src:/src -p 5000:5000 <image_name>)
+Rscript --vanilla /scripts/isee.R /import/sce_mini /import/prep.R
+
+# ------------------------------------------------------------------------------
+
 # Galaxy:
 
 # Where on earth will this end up? Should mv it to /import/prep.R
