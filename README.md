@@ -14,6 +14,12 @@ The `prep()` function in `prep.R` can be extended to manipulate the `sce` object
 The `iSEE_PARAMS` array in `prep.R` can be used to pass arbitrary
 arguments to the `iSEE()` function call. Make sure that they are valid params otherwise this will of course break! (in Galaxy, should be validated in the tool form).
 
+# Local testing
+Use branch `local-testing`
+
+# Galaxy production
+Use branch `main`
+
 ---
 
 ### Build the container
