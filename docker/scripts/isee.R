@@ -8,14 +8,18 @@ library(HDF5Array)
 
 args = commandArgs(trailingOnly=TRUE)
 if (length(args) != 2) {
-  stop("Requires two positional args: [sce_data path], [prep.R path], ", call.=FALSE)
+  stop("Requires two positional args: [path:sce_data], [path:prep.R], ", call.=FALSE)
 }
 
 source(args[2])  # import prep() and iSEE_PARAMS
 
-sce_file <- args[1]
-sce_origin <- loadHDF5SummarizedExperiment(sce_file)
-sce <- prep(sce_origin)
+sce_path <- args[1]
+sce_origin <- loadHDF5SummarizedExperiment(sce_path)
+sce <- prep(sce_origin)  # probably not useful for users
 
-app <- iSEE(sce)  # Can add arbitrary user kwargs here
+# Concatenate data path and user params
+args <- c(list(sce), list(iSEE_PARAMS))
+
+# Pass arbitrary args/kwargs to iSEE()
+app <- do.call('iSEE', args)
 shiny::runApp(app, host="0.0.0.0", port=8888)
