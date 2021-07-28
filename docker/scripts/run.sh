@@ -13,22 +13,26 @@
 
 # Galaxy:
 
-# Where on earth will this end up? Should mv it to /import/prep.R
-# get -i ${CONFIG_R_SCRIPT} && \
-
 # WDIR: /import
 
-echo "" >> /import/docker.out
+# Send output to host machine data directory for debugging (unsure if necessary)
+echo "" >> docker.out
 echo "Running iSEE at $(date +"%F | %H:%M:%S")" >> /import/docker.out
-echo "" >> /import/docker.out
+echo "" >> docker.out
 
+# Automatically kill container when traffic stops
+/scripts/monitor_traffic.sh &
+
+# Rename input files and run iSEE
 get -i ${input_rds} && get -i ${input_h5}  && \
+get -i ${input_rscript}                    && \
 mkdir sce                                  && \
 mv ${input_rds} sce/se.rds                 && \
 mv ${input_h5} sce/assay.h5                && \
+mv ${input_rscript} sce/prep.R             && \
 Rscript                                       \
     --vanilla                                 \
     /scripts/isee.R                           \
-    /import/sce                               \
-    # /import/${CONFIG_R_SCRIPT}              \
-    >> /import/docker.out
+    sce                                       \
+    sce/prep.R                                \
+    >> docker.out

@@ -1,4 +1,5 @@
 FROM iseedevelopers/isee:latest
+MAINTAINER Cameron Hyde <c.hyde@qcif.edu.au>
 
 RUN apt-get update -qq && apt-get install -y python3-pip
 
