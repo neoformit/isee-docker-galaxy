@@ -27,10 +27,6 @@ is a great resource if you're just getting started with Docker.
 
 ### Build the container
 
-> To deploy to Galaxy, make sure you `git checkout` and build the `main` branch.
-For running locally in the `test-data` directory, checkout the `local-testing`
-branch.
-
 ```sh
 cd <my-dev-directory>
 git clone https://github.com/neoformit/isee-docker-galaxy.git && \
@@ -41,8 +37,6 @@ docker build -t isee:test ./docker
 ```
 
 ### Test run
-
-> To test locally, build the `local-testing` branch
 
 The `test-data` directory contains some data to test run the container:
 
@@ -55,7 +49,11 @@ The `test-data` directory contains some data to test run the container:
 #         └── se.rds
 
 cd test-data
-docker run -d -v "$(pwd)"/src:/import -p 5000:8888 --name isee isee:test
+docker run -v "$(pwd)"/src:/import -p 5000:8888 \
+    --name isee isee:galaxy \
+    /scripts/run.sh \
+    /import/sce_mini \
+    /import/prep.R
 ```
 
 Give the app 20 seconds to fire up, then find it at http://127.0.0.1:5000 in
@@ -67,6 +65,7 @@ detached mode `-d` to view output as iSEE starts up.
 The docker container will run forever unless you stop it:
 
 ```sh
+# Run in a new terminal if docker is blocking the current one
 docker container stop isee
 ```
 
