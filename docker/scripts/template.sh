@@ -8,5 +8,5 @@
 if [[ $1 == "" ]]; then
     echo "iSEE_PARAMS <- {}"
 else
-    echo $1
+    cat $1
 fi
