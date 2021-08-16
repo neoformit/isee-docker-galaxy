@@ -1,24 +1,50 @@
-# A function to prepare sce data for display in iSEE
+# Example user configuration in the Galaxy iSEE Interactive tool
 
-prep <- function(sce) {
-  # A HDF5SummarizedExperiment object that may be manipulated before
-  # returning for display in iSEE. You probably want to test this
-  # code in RStudio and then paste it in here to ease debugging.
-
-  # Your code here
-
-  return(sce)
+cluster_color_fun <- function(n){
+  # pretend these are custom colours, for clusters, or for samples.
+  if (n <=12) {
+    return(RColorBrewer::brewer.pal(n, "Paired"))
+  } else {
+    return(rainbow(n))
+  }
 }
 
-# myColorMap <- ExperimentColorMap(myColorConfig)
+ecm <- ExperimentColorMap(
+  colData = list(
+    cluster = cluster_color_fun
+  ),
+  all_continuous = list(
+    assays = viridis::plasma
+  )
+)
 
-# myPlots <- c(
-#   ReducedDimensionPlot(myPlotConfig),
-#   FeatureAssayPlot(myPlotConfig),
-#   ...
-# )
+initial_plots <- c(
+  # Show umap with clusters by default
+  ReducedDimensionPlot(Type="UMAP",
+                       ColorBy="Column data",
+                       ColorByColumnData="cluster",
+                       VisualBoxOpen=TRUE,
+                       PanelWidth=6L),
 
-iSEE_PARAMS <- {
-    # colormap: myColorMap,
-    # initial: myPlots,
-}
+  # Show gene expression plot separated (and coloured) by cluster, by default.
+  FeatureAssayPlot(XAxis = "Column data",
+                   XAxisColumnData = 'cluster',
+                   DataBoxOpen=TRUE,
+                   ColorBy="Column data",
+                   ColorByColumnData="cluster",
+                   PanelWidth=6L
+  ),
+
+  # Gene list is better wide
+  RowDataTable(PanelWidth=12L),
+
+  # For cell level observations
+  ColumnDataPlot(PanelWidth=6L)
+
+)
+
+# Keys should be valid iSEE() params
+iSEE_PARAMS <- c(
+  colormap = "ecm",
+  initial = "initial_plots"
+)

@@ -4,8 +4,8 @@
 # WDIR: /import
 
 # Automatically kill container when traffic stops
-# /scripts/monitor_traffic.sh &
+/scripts/monitor_traffic.sh &
 
 Rscript                                       \
     --vanilla                                 \
-    /scripts/isee.R $1 $2
+    $1  # templated R script
