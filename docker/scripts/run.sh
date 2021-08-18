@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Run isee with R passing input file arguments
+# Run isee by passing templated R script to Rscript
 # WDIR: /import
 
 # Automatically kill container when traffic stops
@@ -8,4 +8,4 @@
 
 Rscript                                       \
     --vanilla                                 \
-    $1  # templated R script
+    $1 > "${LOG_PATH}"

@@ -8,10 +8,19 @@ RUN apt-get update && \
     apt-get clean && \
     apt-get autoremove -y
 
+# Don't actually use this currently?
 RUN pip3 install galaxy-ie-helpers
 
 COPY ./scripts/* /scripts/
 
 WORKDIR /import
 
-EXPOSE 8888
+# Referenced in run script
+ARG LOG_PATH
+ENV LOG_PATH=$LOG_PATH
+
+ARG PORT
+ENV PORT=$PORT
+RUN mkdir -p $(dirname "${LOG_PATH}")
+
+EXPOSE $PORT
