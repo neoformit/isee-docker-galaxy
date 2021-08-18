@@ -10,8 +10,9 @@ test_path="$(shell pwd)"/test-data/src
 log_path=/var/log/isee.log
 
 WEB_TAG=1.0.0
-WEB_TARGET=neoformit/$(image_name):$(WEB_TAG)
-WEB_LATEST=neoformit/$(image_name):latest
+DOCKERHUB_NAME=neoformit
+WEB_TARGET=$(DOCKERHUB_NAME)/$(image_name):$(WEB_TAG)
+WEB_LATEST=$(DOCKERHUB_NAME)/$(image_name):latest
 
 VPATH = docker:docker/scripts
 

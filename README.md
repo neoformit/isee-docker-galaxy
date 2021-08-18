@@ -1,4 +1,4 @@
-# isee Docker Galaxy
+# iSEE Docker Galaxy
 
 A dockerized iSEE to run as an interactive tool in Galaxy
 
@@ -6,7 +6,7 @@ A dockerized iSEE to run as an interactive tool in Galaxy
 
 ### The Docker container should:
 - Read in an SCE dataset (`test-data/src/sce_mini/`)
-- and a templated R script (`test-data/src/isee.R` or arg[0])
+- and a templated R script (`test-data/src/isee.R` or `arg[0]`)
 - then run that dataset in iSEE
 
 In production Galaxy, the R script should be templated by the Galaxy iSEE tool
@@ -17,15 +17,15 @@ is a great resource if you're just getting started with Docker.
 
 ---
 
-### Build the container on Ubuntu
+### Build the container (Ubuntu)
 
 ```sh
+# N.B you may need to run make as sudo if docker requires sudo for your user
+
 cd <my-dev-directory>
 git clone https://github.com/neoformit/isee-docker-galaxy.git && \
 cd isee-docker-galaxy && \
 sudo apt install -y docker make && \
-
-# N.B you may need to run as sudo if docker requires sudo for your user
 make
 ```
 
@@ -44,7 +44,7 @@ The `test-data` directory contains some data to test run the container:
 #         └── se.rds
 ```
 
-Run the container on this test data:
+Run the container on this test data and check out iSEE in your browser:
 
 ```sh
 make test
@@ -82,6 +82,13 @@ docker build -t isee:galaxy ./docker
 docker tag isee:galaxy <account-name>/<repository>
 # Push the image to the remote
 docker push <account-name>/<repository>
+```
+
+If you'd like to streamline the above process, you can update `DOCKERHUB_NAME`
+in the `makefile` and build/deploy like this:
+
+```sh
+make deploy
 ```
 
 The remote should now be available for consumption by Galaxy (or anyone else):
