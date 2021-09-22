@@ -12,5 +12,5 @@ sce <- loadHDF5SummarizedExperiment(sce_path)
 app <- iSEE(sce,
     # Optional params can go here
 )
-port <- strtoi(Sys.getenv('PORT'))
-shiny::runApp(app, host="0.0.0.0", port=port)
+
+shiny::runApp(app, host="0.0.0.0", port=8888)
