@@ -15,12 +15,7 @@ COPY ./scripts/* /scripts/
 
 WORKDIR /import
 
-# Referenced in run script
-ARG LOG_PATH
-ENV LOG_PATH=$LOG_PATH
-
 ARG PORT
 ENV PORT=$PORT
-RUN mkdir -p $(dirname "${LOG_PATH}")
 
 EXPOSE $PORT

@@ -7,7 +7,6 @@ port=-p 127.0.0.1:$(internal_port):$(internal_port)
 
 docker_path=./docker
 test_path="$(shell pwd)"/test-data/src
-log_path=/var/log/isee.log
 
 WEB_TAG=1.0.0
 DOCKERHUB_NAME=neoformit
@@ -18,7 +17,7 @@ VPATH = docker:docker/scripts
 
 build: Dockerfile run.sh monitor_traffic.sh
 	echo "Building container ${image_name}:${image_tag}"
-	@docker build --no-cache --build-arg LOG_PATH=$(log_path) \
+	@docker build --no-cache \
 		--build-arg PORT=${internal_port} \
 		-t $(image_name):$(image_tag) $(docker_path)
 	@docker tag $(image_name) $(WEB_TARGET)
@@ -42,11 +41,5 @@ stop:
 
 clean: stop
 	docker rmi $(image_name) || true
-
-sh:
-	docker exec -i `docker ps | grep -Poe '^[a-z0-9]{12}'` bash
-
-log:
-	docker exec `docker ps | grep -Poe '^[a-z0-9]{12}'` tail -f $(log_path)
 
 .PHONY: build stop
