@@ -6,6 +6,4 @@
 # Automatically kill container when traffic stops
 /scripts/monitor_traffic.sh &
 
-Rscript                                       \
-    --vanilla                                 \
-    $1 > "${LOG_PATH}"
+Rscript --vanilla $1
